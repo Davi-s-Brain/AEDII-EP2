@@ -332,7 +332,7 @@ Peso valorAtual;
    Esta funcao eh inicialmente chamada pela funcao caixeiroViajante */
 void caixeiroAux(Grafo*g, int atual, int numVisitados){
   ElemLista *vizinhoAtual = g->A[atual];
-  int n = g->numVertices, x = 0, v = vizinhoAtual->vertice;
+  int n = g->numVertices, x = 0, v;
 
   if (numVisitados == n) {
     if (arestaExiste(g, atual, 0)) {
@@ -348,6 +348,7 @@ void caixeiroAux(Grafo*g, int atual, int numVisitados){
   }
 
   while (vizinhoAtual) {
+    v = vizinhoAtual->vertice;
     if (!visitado[v]) {
       visitado[v] = true;
       cicloAtual[numVisitados] = v;
