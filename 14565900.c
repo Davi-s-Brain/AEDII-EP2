@@ -330,6 +330,18 @@ Peso valorAtual;
 /* Funcao auxiliar, potencialmente recursiva, que ira resolver
    o problema do caixeiro viajante.
    Esta funcao eh inicialmente chamada pela funcao caixeiroViajante */
+
+void auxiliaRecursivo(int numVisitados, Grafo* g, ElemLista *vizinhoAtual, int v) {
+  if (!visitado[v]) {
+    visitado[v] = true;
+    cicloAtual[numVisitados] = v;
+    valorAtual += vizinhoAtual->peso;
+    caixeiroAux(g, v, numVisitados + 1);
+    visitado[v] = false;
+    valorAtual -= vizinhoAtual->peso;
+  }
+}
+
 void caixeiroAux(Grafo*g, int atual, int numVisitados){
   ElemLista *vizinhoAtual = g->A[atual];
   int n = g->numVertices, x = 0, v;
@@ -349,14 +361,7 @@ void caixeiroAux(Grafo*g, int atual, int numVisitados){
 
   while (vizinhoAtual) {
     v = vizinhoAtual->vertice;
-    if (!visitado[v]) {
-      visitado[v] = true;
-      cicloAtual[numVisitados] = v;
-      valorAtual += vizinhoAtual->peso;
-      caixeiroAux(g, v, numVisitados + 1);
-      visitado[v] = false;
-      valorAtual -= vizinhoAtual->peso;
-    }
+    auxiliaRecursivo(numVisitados, g, vizinhoAtual, v);
     vizinhoAtual = vizinhoAtual->prox;
   }
 }
