@@ -345,17 +345,18 @@ void auxiliaRecursivo(int numVisitados, Grafo* g, ElemLista *vizinhoAtual, int v
 void caixeiroAux(Grafo*g, int atual, int numVisitados){
   ElemLista *vizinhoAtual = g->A[atual];
   int n = g->numVertices, x = 0, v;
+  bool verificaTodosVisitados = numVisitados == n, verificaAresta = arestaExiste(g, atual, 0);
 
-  if (numVisitados == n) {
-    if (arestaExiste(g, atual, 0)) {
-      valorAtual += pesoAresta(g, atual, 0);
-      if (valorAtual < melhorValor) {
-        melhorValor = valorAtual;
-        for (x = 0; x < n; x++)
-          melhorCiclo[x] = cicloAtual[x];
-      }
-      valorAtual -= pesoAresta(g, atual, 0);
+  if (verificaTodosVisitados && verificaAresta) {
+    valorAtual += pesoAresta(g, atual, 0);
+
+    if (valorAtual < melhorValor) {
+      melhorValor = valorAtual;
+      for (x = 0; x < n; x++)
+        melhorCiclo[x] = cicloAtual[x];
     }
+
+    valorAtual -= pesoAresta(g, atual, 0);
     return;
   }
 
