@@ -335,10 +335,10 @@ void auxiliaRecursivo(int numVisitados, Grafo* g, ElemLista *vizinhoAtual, int v
   if (!visitado[v]) {
     visitado[v] = true;
     cicloAtual[numVisitados] = v;
-    valorAtual += vizinhoAtual->peso;
+    valorAtual = valorAtual + vizinhoAtual->peso;
     caixeiroAux(g, v, numVisitados + 1);
     visitado[v] = false;
-    valorAtual -= vizinhoAtual->peso;
+    valorAtual = valorAtual - vizinhoAtual->peso;
   }
 }
 
@@ -348,7 +348,7 @@ void caixeiroAux(Grafo*g, int atual, int numVisitados){
   bool verificaTodosVisitados = numVisitados == n, verificaAresta = arestaExiste(g, atual, 0);
 
   if (verificaTodosVisitados && verificaAresta) {
-    valorAtual += pesoAresta(g, atual, 0);
+    valorAtual = valorAtual + pesoAresta(g, atual, 0);
 
     if (valorAtual < melhorValor) {
       melhorValor = valorAtual;
@@ -356,7 +356,7 @@ void caixeiroAux(Grafo*g, int atual, int numVisitados){
         melhorCiclo[x] = cicloAtual[x];
     }
 
-    valorAtual -= pesoAresta(g, atual, 0);
+    valorAtual = valorAtual - pesoAresta(g, atual, 0);
     return;
   }
 
